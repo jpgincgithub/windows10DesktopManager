@@ -1,32 +1,55 @@
-# windows10DesktopManager
-An autohotkey desktop manager
-
-v0.1
-
-Origionally Created By:
-[jpginc](https://github.com/jpginc/windows10DesktopManager)
-
-Modified and Updated by:
-[KroniK907](https://github.com/KroniK907)
+# Windows 10 Desktop Manager
+An Autohotkey desktop manager
 
 ----
 
 ###Description
 
-This is a macro which allows you to move to specific Windows 10 virtual desktops as well as move the current active window to a specific virtual desktop. 
+This is a macro which allows you to:
 
-###Installation
+1. Move to another virtual desktop using keyboard shortcuts. By default the shortcut is the Capslock key + a number
+2. Move the current active window to a specific virtual desktop. By default this shortcut is windows key + shift + a number
 
-If you already use AutoHotkey, simply download the latest release and run the windows10.ahk
+###Using the Desktop Manager
 
-If you do not wish to use AutoHotkey, simply download the latest release and run the windows10DesktopManager.exe
+To use this script you need [Autohotkey](https://autohotkey.com/) installed. Once Autohtokey is installed simply download these files and run windows10.ahk
 
-###Use
+You can specify an options object in windows10.ahk which is used to setup hotkeys in the JPGIncDesktopManagerClass. By default the settings object looks like this:
 
-**Changing Desktops**  
-Simply hold the WindowsKey and then press the number key for the virtual desktop you wish to jump to. 
+```autohotkey
+options := {"goToDesktopModKey" : "Capslock" ;capslock + number number jumps to desktop
+	,"moveWindowModKey" : "+#" ;windows key + shift + number moves the active window to a desktop
+	,"postChangeDesktop" : Func("afterDesktopChangeTurnOffCapslock").bind()} ;after moving the active window turn off capslock
+```
 
-Alternatively you can press WindowsKey+Tab to open the Windows Virtual Window Manager and then press any number to jump to that desktop.
+###Options
+You can specify the following options using a simple key/value [Associative array](https://autohotkey.com/docs/Objects.htm#Usage_Associative_Arrays)
 
-**Moving Window to Desktop**
-Holding Shift+WindowsKey and then pressing a number key will move the currently active window to the new virtual desktop. 
+
+ **No keys (Multitasking view hotkeys only)**
+ 
+Pressing numbers 1 through 0 while in the multi tasking view (the view that comes up after pressing win + tab) will go to the desktop number that you pressed
+
+**goToDesktopModKey Key**
+
+Specify a hotkey (which will be combined with numbers 1 through 0)  for going to a desktop.
+Example: ```"d```  will become a hotkey with the combination: 'd + number' 
+
+**moveWindowModKey Key**
+
+Specify a hotkey (which will be combined with numbers 1 through 0) for moving the active window to a desktop. For
+Example: ```"+#"```  will become a hotkey with the combination: 'shift + windows key + number' 
+
+**postChangeDesktop Key** 
+
+Specify a function name or function object. The function that will be called after moving desktops
+
+**postMoveWindow Key**
+
+Specify a function name or function object. The function that will be called after moving the active window to a desktop
+
+**Further reading**
+
+Checkout the [Autohotkey hotkeys](https://autohotkey.com/docs/Hotkeys.htm) documentation for more information on valid hotkey combos
+
+Checkout the [Autohotkey function objects](https://autohotkey.com/docs/objects/Functor.htm) documentation for more information on how to create callbacks
